@@ -1,4 +1,4 @@
-# 小米系列路由器远程命令执行漏洞
+# 小米系列路由器远程命令执行漏洞（CVE-2019-18370，CVE-2019-18371）
 
 discoverer: UltramanGaia from Kap0k & Zhiniang Peng from 360 Core Security 
 
@@ -10,7 +10,7 @@ discoverer: UltramanGaia from Kap0k & Zhiniang Peng from 360 Core Security
 
 
 
-## 远程任意文件读取漏洞
+## 远程任意文件读取漏洞（CVE-2019-18371）
 
 #### 小米路由器的nginx配置文件错误，导致目录穿越漏洞，实现任意文件读取（无需登录）
 
@@ -208,7 +208,7 @@ print("stok="+stok)
 
 
 
-## 远程命令执行漏洞（root权限）
+## 远程命令执行漏洞（root权限）（CVE-2019-18370）
 
 备份文件是`tar.gz`格式的，上传后`tar zxf`解压，所以构造备份文件，可以控制解压目录的文件内容，结合测试上传下载速度功能的sh脚本执行时读取测试url列表文件，并将url部分直接进行命令拼接执行。
 
