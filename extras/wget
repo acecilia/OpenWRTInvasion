@@ -1,0 +1,2 @@
+echo "$@" >> /tmp/wgetlog
+/usr/bin/wget "$@"

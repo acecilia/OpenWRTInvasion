@@ -1,0 +1,307 @@
+#!/usr/bin/lua
+
+local json          = require("json")
+local posix         = require("posix")
+local nixio         = require("nixio")
+local fs            = require("luci.fs")
+local util          = require("luci.util")
+local sys           = require("xiaoqiang.util.XQSysUtil")
+local netutil       = require("xiaoqiang.util.XQNetUtil")
+local downloader    = require("xiaoqiang.util.XQDownloadUtil")
+local xqfunction    = require("xiaoqiang.common.XQFunction")
+local xqmbox        = require("xiaoqiang.module.XQMessageBox")
+local xqcrypto      = require("xiaoqiang.util.XQCryptoUtil")
+local config        = require("xiaoqiang.common.XQConfigs")
+local preference    = require("xiaoqiang.XQPreference")
+
+local MIN, MAX      = 1, 60
+local AUTO_DEFAULT  = 0
+local PLUGIN_DEFAULT  = 1
+local TIME_DEFAULT  = 4
+local miscpredflag  = true
+local OTAPRDPIDFILE = "/tmp/ota_predownload_pid"
+
+function miscpred()
+    local uci = require("luci.model.uci").cursor()
+    local download = uci:get("misc", "ota_pred", "download")
+    if tonumber(download) and tonumber(download) == 1 then
+        miscpredflag = true
+    else
+        miscpredflag = false
+    end
+end
+
+function log(...)
+    posix.openlog("predownload-ota", "np", LOG_USER)
+    for i, v in ipairs({...}) do
+        posix.syslog(4, util.serialize_data(v))
+    end
+    posix.closelog()
+end
+
+function uci_get(key)
+    local uci = require("luci.model.uci").cursor()
+    if key then
+        return uci:get("otapred", "settings", key)
+    else
+        return nil
+    end
+end
+
+function uci_set(key, value)
+    local uci = require("luci.model.uci").cursor()
+    if key then
+        if value then
+            uci:set("otapred", "settings", key, value)
+        else
+            uci:delete("otapred", "settings", key)
+        end
+        uci:commit("otapred")
+    end
+end
+
+function system_wakeup()
+    os.execute("killall -s 10 noflushd ")
+end
+
+function random_sleep()
+    math.randomseed(tostring(os.time()):reverse():sub(1, 6))
+    local seconds = tostring(math.random(MIN, MAX))
+    log("Update detection will start in "..seconds.." seconds")
+    os.execute("sleep "..seconds)
+end
+
+function clear_dir()
+    os.execute("rm /userdisk/download/*.bin")
+end
+
+function wget(link, filepath)
+    local download = "wget -t3 -T30 '"..link.."' -O "..filepath
+    os.execute(download)
+    return xqcrypto.md5File(filepath)
+end
+
+function plugin_upgrade()
+    local plugin = tonumber(uci_get("plugin")) or PLUGIN_DEFAULT
+    if plugin ~= 1 then
+        return
+    end
+    os.execute("pluginControllor --autoUpdate 2>/dev/null >/dev/null")
+end
+
+function system_plugin_auto_upgrade()
+    local invokeDate = tostring(uci_get("spauid"))
+    local currDate = tostring(os.date("%Y%m%d", os.time()))
+    local invokeCount = tonumber(uci_get("spauic")) or 0
+    if currDate ~= invokeDate then
+        uci_set("spauid", currDate)
+        uci_set("spau", 0)
+        invokeCount = 0
+    end
+    invokeCount = invokeCount + 1
+    uci_set("spauic", invokeCount)
+    local systemPluginAutoUpgradeCalled = tonumber(uci_get("spau")) or 0
+    if systemPluginAutoUpgradeCalled == 1 then
+        return
+    end
+    math.randomseed(tostring(os.time()):reverse():sub(1, 6))
+    local rand = math.random(0, 2)
+    if rand ~= 0 and invokeCount < 3 then
+        return
+    end
+    os.execute("pluginControllor --autoUpdatePro 2>/dev/null >/dev/null")
+    uci_set("spau", 1)
+end
+
+function ecos_upgrade()
+    local devices = util.exec("ubus call trafficd hw")
+    if xqfunction.isStrNil(devices) then
+        return
+    end
+    local ecos = {}
+    devices = json.decode(devices)
+    for mac, item in pairs(devices) do
+       local suc,des = nil
+       if item.description then
+            -- parse desc
+            suc, des = pcall(json.decode, item.description)
+       end
+       if suc and des.hardware and des.hardware == 'R01' then
+            if item.version
+                and tonumber(item.is_ap) ~= 0
+                and tonumber(item.assoc) == 1 then
+                local dev = {
+                    ["mac"] = mac,
+                    ["version"] = item.version,
+                    ["channel"] = "current",
+                    ["sn"]      = des.sn or "",
+                    ["ctycode"] = des.country_code or "CN"
+                }
+                local ips = item.ip_list
+                if #ips > 0 then
+                    dev["ip"] = ips[1].ip
+                end
+                dev["channel"] = des.channel or "current"
+                if dev.ip then
+                    table.insert(ecos, dev)
+                end
+            end
+       end
+    end
+    local files = {}
+    for _, item in ipairs(ecos) do
+        local check = netutil.checkEcosUpgrade(item.version, item.channel, item.sn, item.ctycode)
+        if check and check.needUpdate == 1 then
+            log("Ecos upgrade info:", check)
+            local tfile = "/tmp/"..check.fullHash..".img"
+            files[check.fullHash] = tfile
+            local download = wget(check.downloadUrl, tfile)
+            if download and download == check.fullHash then
+                local ret = os.execute("cd /tmp && mk_ecos_image -x "..tfile)
+                if ret ~= 0 then
+                    log("Ecos image verify failed.")
+                else
+                    local code = os.execute("tbus postfile "..item.ip.." /tmp/eCos.img")
+                    if code ~= 0 then
+                        log("Ecos flash failed, mac:"..item.mac.." version:"..item.version)
+                    end
+                end
+            else
+                log("Ecos download failed, mac:"..item.mac.." version:"..item.version)
+            end
+        else
+            log("Ecos upgrade info: no update")
+        end
+    end
+    for _, filepath in pairs(files) do
+        os.execute("rm "..filepath)
+    end
+    os.execute("rm /tmp/eCos.img 2>/dev/null >/dev/null")
+end
+
+function rom_upgrade(auto, time, hour)
+    local check = netutil.checkUpgrade()
+    if check and check.needUpdate == 1 then
+        xqmbox.addMessage({["type"] = 1, ["data"] = {["version"] = check.version}})
+        local updateurl = uci_get("updateurl")
+        if updateurl ~= check.downloadUrl then
+            local hash, filepath
+            if check.weight == 9 or (auto == 1 and hour == time) then
+                system_wakeup()
+                uci_set("updateurl", check.downloadUrl)
+                log("Start downloading...")
+                clear_dir()
+                preference.set(config.PREF_ROM_FULLSIZE,check.fileSize)
+                hash, filepath = downloader.syncDownload(check.downloadUrl, priority, true)
+                if not hash or not filepath then
+                    uci_set("updateurl", "")
+                end
+                if check.fullHash == hash then
+                    log("Rom upgrade start...")
+                    if fs.access(filepath) and not sys.verifyImage(filepath) then
+                        log("Rom upgrade failed: Verify Image failed!")
+                        fs.unlink(filepath)
+                        uci_set("updateurl", "")
+                    else
+                        if xqfunction.sysLockStatus() ~= 1 then
+                            xqfunction.sysLock()
+                            sys.updateUpgradeStatus(5)
+                            local cmdpending = miscpredflag and "" or " &"
+                            local result = os.execute("flash.sh "..filepath..cmdpending)
+                            if result ~= 0 then
+                                sys.updateUpgradeStatus(10)
+                                if fs.access(filepath) then
+                                    fs.unlink(filepath)
+                                end
+                                log("Rom upgrade failed: Flash failed!")
+                                uci_set("updateurl", "")
+                            else
+                                sys.updateUpgradeStatus(11)
+                                log("Rom upgrade succeed!")
+                            end
+                        else
+                            log("Rom upgrade failed: duplicate!")
+                            uci_set("updateurl", "")
+                        end
+                    end
+                else
+                    log("Rom upgrade failed: Wrong Hash!")
+                    uci_set("updateurl", "")
+                end
+            else
+                log("Rom auto-upgrade disabled!")
+                uci_set("updateurl", "")
+            end
+        end
+    end
+end
+
+function timed_task()
+    -- Plugin upgrade
+    if pcall(plugin_upgrade) then
+        log("Plugin upgrade task finished")
+    else
+        log("Plugin upgrade task failed: fatal error")
+    end
+
+    -- Ecos upgrade
+    if pcall(ecos_upgrade) then
+        log("Ecos upgrade task finished")
+    else
+        log("Ecos upgrade task failed: fatal error")
+    end
+end
+
+function crond_task(auto, time, hour)
+    if pcall(rom_upgrade, auto, time, hour) then
+        log("Rom upgrade task finished")
+    else
+        log("Rom upgrade task failed: fatal error")
+    end
+
+    if pcall(system_plugin_auto_upgrade) then
+        log("System plugin auto upgrade task finished")
+    else
+        log("System plugin auto upgrade task failed: fatal error")
+    end
+end
+
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+function main()
+    local check = netutil.checkUpgrade()
+    if check then
+        print("Check object: " .. dump(check))
+    end
+
+    -- local updateurl = uci_get("updateurl")
+    -- print("Update url: " .. updateurl)
+
+    local check2 = netutil.checkEcosUpgrade("2.28.131", "release", "cdfadd55-4089-4aaa-a86a-ebcdd8659c67", "CN")
+    if check2 then
+        print("Check2 object: " .. dump(check2))
+    end
+end
+
+miscpred()
+main()
+
+-- local enable = tonumber(uci_get("enabled"))
+
+-- if enable == 1 then
+--     miscpred()
+--     main()
+-- else
+--     log("Predownload-ota disabled!!!")
+-- end

