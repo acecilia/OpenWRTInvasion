@@ -11,4 +11,10 @@
 
 ## Demo
 
-![Alt Text](readme/exploit.gif)
+### Version 0.0.2: telnet
+
+![Alt Text](readme/exploit-002.gif)
+
+### Version 0.0.1: netcat
+
+![Alt Text](readme/exploit-001.gif)
