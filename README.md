@@ -28,7 +28,7 @@ wget http://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-ramips
 mtd -e OS1 -r write openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin OS1
 ```
 
-OpenWrt will be installed (without Luci). You can now use ssh to connect to the router (and install Luci if you prefer it).
+This will install the snapshot version of OpenWrt (without Luci). You can now use ssh to connect to the router (and install Luci if you prefer it).
 
 ## Demo
 
