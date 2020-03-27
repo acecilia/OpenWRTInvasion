@@ -18,6 +18,8 @@ telnet <router_ip_address>
 * User: root
 * Password: none (just hit enter)
 
+The script also starts an ftp server started at port 21, so you can get access to the filesystem using a GUI (for example [cyberduck](https://cyberduck.io)).
+
 ## Install OpenWrt
 
 After login to the router through telnet, run:
