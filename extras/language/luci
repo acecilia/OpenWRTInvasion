@@ -1,0 +1,35 @@
+
+config core 'main'
+	option mediaurlbase '/xiaoqiang'
+	option resourcebase '/xiaoqiang'
+	option lang 'en'
+
+config extern 'flash_keep'
+	option uci '/etc/config/'
+	option dropbear '/etc/dropbear/'
+	option openvpn '/etc/openvpn/'
+	option passwd '/etc/passwd'
+	option opkg '/etc/opkg.conf'
+	option firewall '/etc/firewall.user'
+	option uploads '/lib/uci/upload/'
+
+config internal 'languages'
+	option zh_cn '简体中文'
+	option en 'English'
+	option zh_hk '香港繁體'
+	option ko_kr '한국'
+	option zh_tw '台湾繁體'
+
+config internal 'sauth'
+	option sessionpath '/tmp/luci-sessions'
+	option sessiontime '7200'
+
+config internal 'ccache'
+	option enable '1'
+
+config internal 'themes'
+	option xiaoqiang '/xiaoqiang'
+	option OpenWrt '/luci-static/openwrt.org'
+
+config 5 'debuglevel'
+
