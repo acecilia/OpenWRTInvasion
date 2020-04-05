@@ -2,11 +2,13 @@
 
 ## How to run
 
+**NOTE: FROM VERSION `0.0.2` THE ROUTER NEEDS INTERNET ACCESS**. If you require to run the exploit without internet access pplease try version `0.0.1`. Find the versions here: https://github.com/acecilia/OpenWRTInvasion/releases
+
 ```
 # Install requirements
-# pip3 install -r requirements.txt
+pip3 install -r requirements.txt
 # Run the script
-# python3 remote_command_execution_vulnerability.py
+python3 remote_command_execution_vulnerability.py
 ```
 
 After that, a letnet server will be up and running on the router. You can connect to it by running:
