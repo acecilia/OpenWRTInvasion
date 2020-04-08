@@ -22,16 +22,29 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 
 ## Install OpenWrt
 
+**NOTE: LATEST SNAPSHOT FIRMWARE DOES NOT WORK AT THE MOMENT (10/04/2020), AND WILL BRICK YOUR DEVICE**. Please, **READ THE [LATEST POSTS IN THE OPENWRT FORUM](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685) BEFORE PROCEEDING**. Until OpenWrt fixes the problem, you can use the firmware files provided by other users **AT YOUR OWN RISK**:
+
+* User [zorro](https://forum.openwrt.org/u/zorro) provided http://www.mediafire.com/file/0qetz7rm8n9hr04/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin/file ([OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/412))
+* User [zorro](https://forum.openwrt.org/u/zorro) provided https://anonfile.com/LbueT2n8o4/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade_bin ([OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/448))
+
 After login to the router through telnet, run:
 
 ```shell
 cd /tmp
-curl -O https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin # Download firmware
-./busybox sha256sum openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin # Verify the firmware checksum before flashing, very important to avoid bricking your device!
-mtd -e OS1 -r write openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin OS1 # Install OpenWrt
+curl https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin --output firmware.bin # Put here the URL you want to use to download the firmware
+./busybox sha256sum firmware.bin # Verify the firmware checksum before flashing, very important to avoid bricking your device!
+mtd -e OS1 -r write firmware.bin OS1 # Install OpenWrt
 ```
 
 This will install the snapshot version of OpenWrt (without Luci). You can now use ssh to connect to the router (and install Luci if you prefer it).
+
+### Performance:
+
+Some users have reported worse WIFI performance in OpenWrt than in the stock firmware. See the following links:
+
+* [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/430)
+* [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/431)
+* [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/451)
 
 ## Other supported routers or firmware versions
 
@@ -39,6 +52,7 @@ This will install the snapshot version of OpenWrt (without Luci). You can now us
 * MiRouter 4A 100M (non gigabit): user [morhimi](https://forum.openwrt.org/u/morhimi) claims that this method works on firmware version `2.18.51`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/372). User [Jeffpeng](https://forum.openwrt.org/u/jeffpeng) claims that this method works on firmware version `2.18.58`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/373).
 * MiRouter 4C: user [Jeffpeng](https://forum.openwrt.org/u/jeffpeng) claims that this method works on firmware version `2.14.81`: [OpenWrt forum](https://forum.openwrt.org/t/support-for-xiaomi-mi-router-4c-r4cm/36418/31).
 * Mi Router 3Gv2: user [Massimiliano Mangoni](massimiliano.mangoni@gmail.com) claims that this method also works on firmware version `2.28.8` (message posted in Slack).
+* Mi Router 4Q (aka R4C): user cadaverous claims that this method also works on firmware version `2.28.48` (message posted in Slack), but because the router is mips architecture (not mipsel), he needed to use version `0.0.1` of the script (the other versions use a busybox binary built for the mipsel architecture that is used to start a telnet sever).
 
 ## For more info and support go to:
 
