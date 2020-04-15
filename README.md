@@ -22,16 +22,26 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 
 ## Install OpenWrt
 
-**NOTE: LATEST SNAPSHOT FIRMWARE DOES NOT WORK AT THE MOMENT (10/04/2020), AND WILL BRICK YOUR DEVICE**. Please, **READ THE [LATEST POSTS IN THE OPENWRT FORUM](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685) BEFORE PROCEEDING**. Until OpenWrt fixes the problem, you can use the firmware files provided by other users **AT YOUR OWN RISK**:
+When installing OpenWrt on the Xiaomi 4A Gigabit, you may use:
 
-* User [zorro](https://forum.openwrt.org/u/zorro) provided http://www.mediafire.com/file/0qetz7rm8n9hr04/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin/file ([OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/412))
-* User [zorro](https://forum.openwrt.org/u/zorro) provided https://anonfile.com/LbueT2n8o4/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade_bin ([OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/448))
+* An OpenWrt sapshot image that is known to work with the router (downloaded from the official OpenWrt releases portal on the 2020/04/15 and hosted in this repository). The image flashes and boots correctly, but there are some known and major connectivity problems mentioned [here](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/532): 
 
-After login to the router through telnet, run:
+  * Link: https://raw.githubusercontent.com/acecilia/OpenWRTInvasion/master/firmwares/OpenWrt/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin
+  * sha: `245dfe344b9be74121574d37fd5096da2beb9a52dfd4e7903e8f2313414ffc03`
+
+* The latest snapshot from OpenWrt. At the moment, [there are important changes being implemented on OpenWrt](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/509), and this image may or may not work, and could brick your device: https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin
+* Other images provided by OpenWrt users (at your own risk): [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/430). For example:
+
+  * User [zorro](https://forum.openwrt.org/u/zorro) provided http://www.mediafire.com/file/0qetz7rm8n9hr04/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin/file ([OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/412))
+   * User [zorro](https://forum.openwrt.org/u/zorro) provided https://anonfile.com/LbueT2n8o4/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade_bin ([OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/448))
+ 
+* Wait until there is a stable release of OpenWrt
+
+If **after reading above text** you still want to proceed, after login to the router through telnet run the following commands:
 
 ```shell
 cd /tmp
-curl https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin --output firmware.bin # Put here the URL you want to use to download the firmware
+curl https://raw.githubusercontent.com/acecilia/OpenWRTInvasion/master/firmwares/OpenWrt/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin --output firmware.bin # Put here the URL you want to use to download the firmware
 ./busybox sha256sum firmware.bin # Verify the firmware checksum before flashing, very important to avoid bricking your device!
 mtd -e OS1 -r write firmware.bin OS1 # Install OpenWrt
 ```
