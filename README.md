@@ -1,4 +1,4 @@
-# Root shell exploit for several Xiaomi routers
+# Root shell exploit for several Xiaomi routers (4A Gigabit, 4A 100M, 4C, 3Gv2, 4Q, miWifi 3C...)
 
 ## How to run
 
