@@ -38,7 +38,7 @@ When installing OpenWrt on the Xiaomi 4A Gigabit, there are several options. **N
 * The latest snapshot from OpenWrt: `https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin`
 
 * Use a prebuilt image I created myself on `06-06-2020` using `imagebuilder`. The image is hosted in this repository:
-  * Link: `https://raw.githubusercontent.com/acecilia/OpenWRTInvasion/master/firmwares/openwrt/06-06-2020/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin`
+  * Link: `https://raw.githubusercontent.com/acecilia/OpenWRTInvasion/master/firmwares/OpenWrt/06-06-2020/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin`
   * sha: `83feed9ff633863acb1f14b61c30029b924fec252c1ed1e4de2a909e52b2d872 `
 
 * Build your own image with `imagebuilder`, using the latest source code on `master`:
@@ -57,7 +57,7 @@ If **after reading above text** you still want to proceed, after login to the ro
 
 ```shell
 cd /tmp
-curl https://raw.githubusercontent.com/acecilia/OpenWRTInvasion/master/firmwares/openwrt/06-06-2020/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin --output firmware.bin # Put here the URL you want to use to download the firmware
+curl https://raw.githubusercontent.com/acecilia/OpenWRTInvasion/master/firmwares/OpenWrt/06-06-2020/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin --output firmware.bin # Put here the URL you want to use to download the firmware
 ./busybox sha256sum firmware.bin # Verify the firmware checksum before flashing, very important to avoid bricking your device!
 mtd -e OS1 -r write firmware.bin OS1 # Install OpenWrt
 ```
