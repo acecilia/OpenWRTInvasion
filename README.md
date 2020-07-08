@@ -9,7 +9,7 @@ pip3 install -r requirements.txt # Install requirements
 python3 remote_command_execution_vulnerability.py # Run the script
 ```
 
-After that, a letnet server will be up and running on the router. You can connect to it by running:
+After that, a telnet server will be up and running on the router. You can connect to it by running:
 
 ```
 telnet <router_ip_address>
