@@ -9,6 +9,12 @@ pip3 install -r requirements.txt # Install requirements
 python3 remote_command_execution_vulnerability.py # Run the script
 ```
 
+You will be asked for the router IP address and for the `stok`.
+
+You can grab the `stok` from the router URL after you log in to the admin interface:
+
+![](readme/readme-001.png)
+
 After that, a telnet server will be up and running on the router. You can connect to it by running:
 
 ```
@@ -42,7 +48,7 @@ When installing OpenWrt on the Xiaomi 4A Gigabit, there are several options. **N
   * sha: `83feed9ff633863acb1f14b61c30029b924fec252c1ed1e4de2a909e52b2d872 `
 
 * Build your own image with `imagebuilder`, using the latest source code on `master`:
-  
+
   ```
   docker pull openwrtorg/imagebuilder:ramips-mt7621-master
   docker run --rm -v "$(pwd)"/bin/:/home/build/openwrt/bin -it openwrtorg/imagebuilder:ramips-mt7621-master
@@ -50,7 +56,7 @@ When installing OpenWrt on the Xiaomi 4A Gigabit, there are several options. **N
   ```
 
 * Other images provided by OpenWrt users (at your own risk): [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-and-flashable-with-openwrtinvasion)
- 
+
 * Wait until there is a stable release of OpenWrt
 
 If **after reading above text** you still want to proceed, after login to the router through telnet run the following commands:
