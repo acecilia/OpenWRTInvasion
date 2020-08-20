@@ -9,9 +9,7 @@ pip3 install -r requirements.txt # Install requirements
 python3 remote_command_execution_vulnerability.py # Run the script
 ```
 
-You will be asked for the router IP address and for the `stok`.
-
-You can grab the `stok` from the router URL after you log in to the admin interface:
+You will be asked for the router IP address and for the `stok`. You can grab the `stok` from the router URL after you log in to the admin interface:
 
 ![](readme/readme-001.png)
 
