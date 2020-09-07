@@ -35,6 +35,16 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 
 ## Xiaomi 4A Gigabit Global Edition
 
+### Firmwares
+
+This repository contains the following firmwares:
+
+* Official Xiaomi - `2.28.62` - in Chinese. 
+  * URL in this repository: https://github.com/acecilia/OpenWRTInvasion/raw/master/firmwares/stock/miwifi_r4a_firmware_72d65_2.28.62.bin
+* Official Xiaomi - `3.0.24` - in English. 
+  * URL in this repository: https://github.com/acecilia/OpenWRTInvasion/raw/master/firmwares/stock/miwifi_r4a_all_03233_3.0.24_INT.bin
+  * URL in the official Xiaomi site: http://cdn.awsde0-fusion.fds.api.mi-img.com/xiaoqiang/rom/r4a/miwifi_r4a_all_03233_3.0.24_INT.bin
+
 ### Install OpenWrt
 
 When installing OpenWrt on the Xiaomi 4A Gigabit, there are several options. **Note that there isn't a stable release for it yet, which means that the firmware may be unstable**:
