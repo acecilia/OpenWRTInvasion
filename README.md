@@ -39,11 +39,17 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 
 This repository contains the following firmwares:
 
-* Official Xiaomi - `2.28.62` - in Chinese. SHA256: `07d3cead22e3c4fbe98eec29de5d5bea8dad12ade931179972ee56d2ac249060`
+* Official Xiaomi - `2.28.62` - in Chinese. SHA256: `a3db7f937d279cf38c2a3bec09772d65`
   * URL in this repository: https://github.com/acecilia/OpenWRTInvasion/raw/master/firmwares/stock/miwifi_r4a_firmware_72d65_2.28.62.bin
-* Official Xiaomi - `3.0.24` - in English. SHA256: `609b5b59b7b00365451fa358b5a79e0e4078b8a9a7aeb6a994a641287a093548`
+* Official Xiaomi - `3.0.24` - in English. MD5: `9c4a60addaad76dc13b6df6b4ac03233`
   * URL in this repository: https://github.com/acecilia/OpenWRTInvasion/raw/master/firmwares/stock/miwifi_r4a_all_03233_3.0.24_INT.bin
   * URL in the official Xiaomi site: http://cdn.awsde0-fusion.fds.api.mi-img.com/xiaoqiang/rom/r4a/miwifi_r4a_all_03233_3.0.24_INT.bin
+
+If you have a pending update in your Xiaomi stock firmware, you can check its md5 hash and the download url by navigating to:
+
+```
+http://192.168.31.1/cgi-bin/luci/;stok=<stok>/api/xqsystem/check_rom_update
+```
 
 ### Install OpenWrt
 
@@ -104,6 +110,7 @@ You can find solutions in the following links:
 * Original vulnerabilities and exploit: [UltramanGaia](https://github.com/UltramanGaia/Xiaomi_Mi_WiFi_R3G_Vulnerability_POC)
 * Instructions to install OpenWrt after exploit execution: [rogerpueyo](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/21)
 * Testing and detailed install instructions: [hey07](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/349)
+* Checking the URL of pending updates: [sicklesareterrible](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-and-flashable-with-openwrtinvasion/36685/1114?u=acecilia)
 
 ## Demo
 
