@@ -39,9 +39,9 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 
 This repository contains the following firmwares:
 
-* Official Xiaomi - `2.28.62` - in Chinese. 
+* Official Xiaomi - `2.28.62` - in Chinese. SHA256: `07d3cead22e3c4fbe98eec29de5d5bea8dad12ade931179972ee56d2ac249060`
   * URL in this repository: https://github.com/acecilia/OpenWRTInvasion/raw/master/firmwares/stock/miwifi_r4a_firmware_72d65_2.28.62.bin
-* Official Xiaomi - `3.0.24` - in English. 
+* Official Xiaomi - `3.0.24` - in English. SHA256: `609b5b59b7b00365451fa358b5a79e0e4078b8a9a7aeb6a994a641287a093548`
   * URL in this repository: https://github.com/acecilia/OpenWRTInvasion/raw/master/firmwares/stock/miwifi_r4a_all_03233_3.0.24_INT.bin
   * URL in the official Xiaomi site: http://cdn.awsde0-fusion.fds.api.mi-img.com/xiaoqiang/rom/r4a/miwifi_r4a_all_03233_3.0.24_INT.bin
 
