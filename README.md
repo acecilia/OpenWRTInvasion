@@ -19,8 +19,8 @@ After that, a telnet server will be up and running on the router. You can connec
 telnet <router_ip_address>
 ```
 
-* User: root
-* Password: none (just hit enter)
+* User: `root`
+* Password: `root`
 
 The script also starts an ftp server at port 21, so you can get access to the filesystem using a GUI (for example [cyberduck](https://cyberduck.io)).
 
