@@ -62,10 +62,6 @@ When installing OpenWrt on the Xiaomi 4A Gigabit, there are several options. **N
 
 * The latest snapshot from OpenWrt: `https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin`
 
-* Use a prebuilt image I created myself on `06-06-2020` using `imagebuilder`. The image is hosted in this repository:
-  * Link: `https://raw.githubusercontent.com/acecilia/OpenWRTInvasion/master/firmwares/OpenWrt/06-06-2020/openwrt-ramips-mt7621-xiaomi_mir3g-v2-squashfs-sysupgrade.bin`
-  * sha: `83feed9ff633863acb1f14b61c30029b924fec252c1ed1e4de2a909e52b2d872 `
-
 * Build your own image with `imagebuilder`, using the latest source code on `master`:
 
   ```
@@ -74,7 +70,7 @@ When installing OpenWrt on the Xiaomi 4A Gigabit, there are several options. **N
   make PROFILE=xiaomi_mir3g-v2 image
   ```
 
-* Other images provided by OpenWrt users (at your own risk): [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-and-flashable-with-openwrtinvasion)
+* Other images listed in the [official OpenWrt wiki page](https://openwrt.org/inbox/toh/xiaomi/xiaomi_mi_router_4a_gigabit_edition)
 
 * Wait until there is a stable release of OpenWrt
 
