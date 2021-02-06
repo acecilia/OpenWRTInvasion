@@ -24,7 +24,8 @@ setup_busybox() {
     cd /tmp
     rm -rf busybox
     # Rationale for using --insecure: https://github.com/acecilia/OpenWRTInvasion/issues/31#issuecomment-690755250
-    curl -L "https://github.com/acecilia/OpenWRTInvasion/raw/master/script_tools/busybox-mipsel" --insecure --output busybox
+    curl -L "https://cdn.jsdelivr.net/gh/acecilia/OpenWRTInvasion@master/script_tools/busybox-mipsel" --insecure --output busybox
+    #curl -L "https://github.com/acecilia/OpenWRTInvasion/raw/master/script_tools/busybox-mipsel" --insecure --output busybox
     chmod +x busybox
 }
 
@@ -51,7 +52,8 @@ start_ssh() {
     pgrep dropbear | xargs kill || true
 
     # Donwload dropbear static mipsel binary
-    curl -L "https://github.com/acecilia/OpenWRTInvasion/raw/master/script_tools/dropbearStaticMipsel.tar.bz2" --output dropbear.tar.bz2
+    curl -L "https://cdn.jsdelivr.net/gh/acecilia/OpenWRTInvasion@master/script_tools/dropbearStaticMipsel.tar.bz2" --output dropbear.tar.bz2
+    #curl -L "https://github.com/acecilia/OpenWRTInvasion/raw/master/script_tools/dropbearStaticMipsel.tar.bz2" --output dropbear.tar.bz2
     mkdir dropbear
     /tmp/busybox tar xvfj dropbear.tar.bz2 -C dropbear --strip-components=1
 
