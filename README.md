@@ -34,6 +34,7 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 * MiWifi 3C: works on firmware versions `2.9.217`, `2.14.45` and `2.8.51_INT`: [OpenWrt forum](https://forum.openwrt.org/t/support-for-xiaomi-miwifi-3c/11643/23), [OpenWrt forum](https://forum.openwrt.org/t/support-for-xiaomi-miwifi-3c/11643/17).
 * [Mi Router 4](https://www.mi.com/miwifi4): user [Firef0x](https://github.com/acecilia/OpenWRTInvasion/issues/21#issuecomment-748619870) claims that exploit version `0.0.1` works on firmware version `2.26.175`.
 * Xiaomi Mi R3P: user [lukasz1992](https://github.com/acecilia/OpenWRTInvasion/issues/58) claims that the exploit works with the Xiaomi Dev firmware.
+* [Xiaomi 3Gv1](https://openwrt.org/toh/hwdata/xiaomi/xiaomi_miwifi_3g): user [krumelmonster](https://github.com/acecilia/OpenWRTInvasion/issues/68#issue-814768067) claims that exploit works with the stock firmware coming with the router.
 
 ## Not supported
 * [AC2350 AIOT](https://github.com/acecilia/OpenWRTInvasion/issues/46)
@@ -94,7 +95,6 @@ Some users have reported worse WIFI performance in OpenWrt than in the stock fir
 ## For more info and support go to:
 
 * [OpenWrt forum thread](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685)
-* [Slack workspace](https://join.slack.com/t/openwrt-workspace/shared_invite/zt-cz2m5uf4-Q8wbP_LKggOy9B7IQyaqfA)
 
 ## If you brick your device
 
