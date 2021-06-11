@@ -4,6 +4,15 @@
 
 **NOTE: FROM VERSION `0.0.2` THE ROUTER NEEDS INTERNET ACCESS**. If you require to run the exploit without internet access please try version `0.0.1`. Find the versions here: https://github.com/acecilia/OpenWRTInvasion/releases
 
+### Through Docker (also works on Windows)
+
+```console
+$ docker build -t openwrtinvasion https://github.com/acecilia/OpenWRTInvasion.git
+$ docker run --network host -it openwrtinvasion
+```
+
+### Through Linux
+
 ```shell
 pip3 install -r requirements.txt # Install requirements
 python3 remote_command_execution_vulnerability.py # Run the script
