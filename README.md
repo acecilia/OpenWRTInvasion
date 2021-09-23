@@ -22,7 +22,9 @@ You will be asked for the router IP address and for the `stok`. You can grab the
 
 ![](readme/readme-001.png)
 
-After that, a telnet server will be up and running on the router. You can connect to it by running:
+Note that [the script must be run from the same IP address used when login into the router](https://github.com/acecilia/OpenWRTInvasion/issues/97).
+
+After that, a telnet server will be up and running. You can connect to it by running:
 
 ```
 telnet <router_ip_address>
