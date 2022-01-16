@@ -5,7 +5,6 @@ import sys
 
 class RequestHandler(socketserver.StreamRequestHandler):
     def handle(self):
-        
         filename = self.rfile.readline().strip().decode('UTF-8')
         print("local file server is getting '{}' for {}.".format(filename, self.client_address[0]))
         with open("{}/{}".format(self.server.root_dir, filename), "rb") as f:
