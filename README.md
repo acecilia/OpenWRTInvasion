@@ -51,6 +51,8 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 
 ## Xiaomi 4A Gigabit Global Edition
 
+Find [here](https://www.youtube.com/watch?v=a4fDwG3aEb8) a very complete introductory video to the router and the OpenWrt installation
+
 ### Firmwares
 
 This repository contains the following firmwares:
