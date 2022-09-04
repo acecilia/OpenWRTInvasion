@@ -3,7 +3,10 @@
 ## How to run
 
 **NOTE: FROM VERSION `0.0.2` THE ROUTER NEEDS INTERNET ACCESS**. If you require to run the exploit without internet access please try version `0.0.1`. Find the versions here: https://github.com/acecilia/OpenWRTInvasion/releases
+
 **NOTE: THERE ARE REPORTED ISSUES WITH ROUTER IN AP MODE**. If you're not able to succeed in the AP mode, try to switch to some other (WiFi Repeater or Gateway)
+
+**NOTE: THERE ARE COMPATIBILITY ISSUES REPORTED WHEN USING WINDOWS**. This script only runs on Mac or Linux. If you run from Windows, please use docker (explained below)
 
 ### Using Docker (also works on Windows)
 
