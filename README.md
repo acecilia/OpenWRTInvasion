@@ -99,11 +99,7 @@ This will install the snapshot version of OpenWrt (without Luci). You can now us
 
 ### Performance:
 
-Some users have reported worse WIFI performance in OpenWrt than in the stock firmware. See the following links:
-
-* [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/430)
-* [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/431)
-* [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/451)
+Please see [here](https://www.youtube.com/watch?v=a4fDwG3aEb8) for a complete performance analysis
 
 ## For more info and support go to:
 
