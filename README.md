@@ -52,6 +52,11 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 * [Xiaomi 3Gv1](https://openwrt.org/toh/hwdata/xiaomi/xiaomi_miwifi_3g): user [krumelmonster](https://github.com/acecilia/OpenWRTInvasion/issues/68#issue-814768067) claims that exploit works with the stock firmware coming with the router.
 * [AC2350 AIOT](https://www.mi.com/global/mi-aiot-router-ac2350/): user [dobosz23](https://github.com/acecilia/OpenWRTInvasion/issues/46#issuecomment-774784301) claims that exploit version `0.0.6` works on firmware version `1.3.8CN`.
 
+## Unsupported routers and firmware versions
+
+* MiRouter 4A Gigabit:
+  * `3.2.26`: see details and alternatives [here](https://github.com/acecilia/OpenWRTInvasion/issues/140)
+
 ## Xiaomi 4A Gigabit Global Edition
 
 Find [here](https://www.youtube.com/watch?v=a4fDwG3aEb8) a very complete introductory video to the router and the OpenWrt installation
