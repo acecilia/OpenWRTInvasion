@@ -11,8 +11,8 @@
 ### Using Docker (also works on Windows)
 
 ```console
-$ docker build -t openwrtinvasion https://github.com/acecilia/OpenWRTInvasion.git
-$ docker run --network host -it openwrtinvasion
+docker build -t openwrtinvasion https://github.com/acecilia/OpenWRTInvasion.git
+docker run --network host -it openwrtinvasion
 ```
 
 ### Using the command line
