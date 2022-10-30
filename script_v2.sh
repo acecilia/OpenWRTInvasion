@@ -20,9 +20,9 @@ setup_password() {
 setup_busybox() {
     # kill/stop telnet, in case it is running from a previous execution
     pgrep busybox | xargs kill || true
-
+    
     cd /tmp
-    chmod +x busybox
+    chmod a+x busybox
 }
 
 start_ftp() {
@@ -40,15 +40,16 @@ start_ssh() {
     cd /tmp
 
     # Clean
-    rm -rf dropbear
+    rm -rf /tmp/dropbear
     rm -rf /etc/dropbear
 
     # kill/stop dropbear, in case it is running from a previous execution
     pgrep dropbear | xargs kill || true
 
-    # Donwload dropbear static mipsel binary
-    mkdir dropbear
-    /tmp/busybox tar xvfj dropbear.tar.bz2 -C dropbear --strip-components=1
+    # Unpack dropbear static mipsel binary
+    bunzip2 -f /tmp/dropbear.tar.bz2
+    tar -xf /tmp/dropbear.tar
+    mv /tmp/dropbearStaticMipsel /tmp/dropbear
 
     # Add keys
     # http://www.ibiblio.org/elemental/howto/dropbear-ssh.html
