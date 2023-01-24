@@ -57,6 +57,7 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 * MiRouter 4C: 
   * `2.14.81`: [OpenWrt forum](https://forum.openwrt.org/t/support-for-xiaomi-mi-router-4c-r4cm/36418/31)
   * `2.14.87`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/73) 
+  * `2.14.92`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/162) 
   * Find [here](https://github.com/acecilia/OpenWRTInvasion/issues/89) a troubleshooting guide for this router
 * Mi Router 3Gv2: 
   * `2.28.8`: user [Massimiliano Mangoni](massimiliano.mangoni@gmail.com) claims that this method works (message posted in Slack)
