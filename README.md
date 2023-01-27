@@ -53,6 +53,7 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 * MiRouter 4A 100M (non gigabit): 
   * `2.18.51`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/372)
   * `2.18.58`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/373)
+  * `3.0.12`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/165)
   * Find a troubleshooting guide [here](https://github.com/acecilia/OpenWRTInvasion/issues/92)
 * MiRouter 4C: 
   * `2.14.81`: [OpenWrt forum](https://forum.openwrt.org/t/support-for-xiaomi-mi-router-4c-r4cm/36418/31)
