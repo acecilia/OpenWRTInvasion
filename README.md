@@ -83,6 +83,7 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 * MiRouter 4A Gigabit:
   * `2.30.20`: see details [here](https://github.com/acecilia/OpenWRTInvasion/issues/141)
   * `3.2.26`: see details and alternatives [here](https://github.com/acecilia/OpenWRTInvasion/issues/140)
+* Mi Extender AC1200 (RA75): see [here](https://github.com/acecilia/OpenWRTInvasion/issues/159)
 
 ## Xiaomi 4A Gigabit Global Edition
 
