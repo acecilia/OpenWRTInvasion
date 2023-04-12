@@ -47,14 +47,18 @@ The script also starts an ftp server at port 21, so you can get access to the fi
   * `2.28.132`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/359)
   * `3.0.10`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/145)
   * `3.0.24`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-and-flashable-with-openwrtinvasion/36685/1135)
+  * `3.0.27`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/156)
+  * `3.2.30`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/160)
   * `3.10.18`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/150)
 * MiRouter 4A 100M (non gigabit): 
   * `2.18.51`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/372)
   * `2.18.58`: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/373)
+  * `3.0.12`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/165)
   * Find a troubleshooting guide [here](https://github.com/acecilia/OpenWRTInvasion/issues/92)
 * MiRouter 4C: 
   * `2.14.81`: [OpenWrt forum](https://forum.openwrt.org/t/support-for-xiaomi-mi-router-4c-r4cm/36418/31)
   * `2.14.87`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/73) 
+  * `2.14.92`: see [here](https://github.com/acecilia/OpenWRTInvasion/issues/162) 
   * Find [here](https://github.com/acecilia/OpenWRTInvasion/issues/89) a troubleshooting guide for this router
 * Mi Router 3Gv2: 
   * `2.28.8`: user [Massimiliano Mangoni](massimiliano.mangoni@gmail.com) claims that this method works (message posted in Slack)
@@ -79,6 +83,7 @@ The script also starts an ftp server at port 21, so you can get access to the fi
 * MiRouter 4A Gigabit:
   * `2.30.20`: see details [here](https://github.com/acecilia/OpenWRTInvasion/issues/141)
   * `3.2.26`: see details and alternatives [here](https://github.com/acecilia/OpenWRTInvasion/issues/140)
+* Mi Extender AC1200 (RA75): see [here](https://github.com/acecilia/OpenWRTInvasion/issues/159)
 
 ## Xiaomi 4A Gigabit Global Edition
 
@@ -139,7 +144,7 @@ You can find solutions in the following links:
 
 * User [albertcp](https://forum.openwrt.org/u/albertcp) posted a very detailed guide: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/402)
 * User [micky0867](https://forum.openwrt.org/u/micky0867) has some more comments about the topic: [OpenWrt forum](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/391)
-* User [hoddy](https://forum.openwrt.org/u/hoddy) created a [video tutorial](https://www.youtube.com/watch?v=VxzEvdDWU_s)
+* User [hoddy](https://forum.openwrt.org/u/hoddy) created a [video tutorial](https://youtu.be/SLbkce-M2nE)
 
 ## Acknowledgments
 
