@@ -26,7 +26,7 @@ class TcpFileServer:
         self.server_thread = threading.Thread(target=self.server.serve_forever)
         self.server_thread.daemon = True
         self.server_thread.start()
-        print("local file server is runing on {}:{}. root='{}'".format(self.ip, self.port, self.server.root_dir))
+        print("local file server is running on {}:{}. root='{}'".format(self.ip, self.port, self.server.root_dir))
     
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.server.shutdown()

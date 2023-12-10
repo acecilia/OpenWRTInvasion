@@ -30,6 +30,3 @@ config internal 'ccache'
 config internal 'themes'
 	option xiaoqiang '/xiaoqiang'
 	option OpenWrt '/luci-static/openwrt.org'
-
-config 5 'debuglevel'
-

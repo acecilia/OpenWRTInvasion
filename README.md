@@ -162,3 +162,11 @@ You can find solutions in the following links:
 ### Version 0.0.1: netcat (legacy)
 
 ![Alt Text](readme/exploit-001.gif)
+
+## A simple bash based version
+
+**TBD** this is in development and not yet tested. Use it if you know what are you doing.
+
+If you are on Windows and don't want to install Python you can try the plain shell script to install the OpenWrt.
+You still need bash and curl but it comes with Git by default.
+Open Bash shell and run: `bash ./setup_openwrt.bash`
