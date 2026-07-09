@@ -7,6 +7,9 @@ MODE="${MODE:-auto}"
 PASSWORD="${PASSWORD:-}"
 FIRMWARE_PATH=""
 FIRMWARE_URL=""
+ACTION="${ACTION:-menu}"
+SSH_USER="${SSH_USER:-root}"
+SSH_PORT="${SSH_PORT:-22}"
 
 usage() {
   cat <<'EOF'
@@ -15,15 +18,17 @@ Usage: ./openwrt-auto.sh [options]
 Options:
   --ip <addr>             Router IP (default: 192.168.1.1)
   --host-ip <addr>        Host IP to assign on the Ethernet interface (default: 192.168.1.2)
-  --password <pw>         Router admin password
+  --password <pw>         Router admin password / SSH password
   --firmware <path>       Local OpenWrt image file (factory or sysupgrade image)
   --firmware-url <url>    Download an OpenWrt image from a URL first
   --mode <auto|web|tftp>  Upload method to try (default: auto)
+  --action <menu|flash|adguard>  Run a specific workflow
   -h, --help              Show this help message
 
 Examples:
-  ./openwrt-auto.sh --firmware ./openwrt.bin --password admin
-  ./openwrt-auto.sh --firmware-url https://example.com/openwrt.bin --ip 192.168.1.1
+  ./openwrt-auto.sh --action flash --firmware ./openwrt.bin --password admin
+  ./openwrt-auto.sh --action adguard --ip 192.168.1.1 --password admin
+  ./openwrt-auto.sh
 EOF
 }
 
@@ -73,6 +78,11 @@ parse_args() {
         MODE="$2"
         shift 2
         ;;
+      --action)
+        [[ $# -ge 2 ]] || die "--action requires a value"
+        ACTION="$2"
+        shift 2
+        ;;
       -h|--help)
         usage
         exit 0
@@ -107,9 +117,81 @@ ask_password() {
     return
   fi
 
-  read -r -s -p "Router admin password: " PASSWORD
+  read -r -s -p "Router admin / SSH password: " PASSWORD
   echo
   [[ -n "$PASSWORD" ]] || die "Password cannot be empty"
+}
+
+show_menu() {
+  cat <<'EOF'
+Select an action:
+  1) Flash OpenWrt firmware to the router
+  2) Install AdGuard Home on an existing OpenWrt router
+  3) Exit
+EOF
+}
+
+install_adguard_home() {
+  [[ -n "$ROUTER_IP" ]] || die "Router IP is empty"
+  ask_password
+
+  require_cmd ssh
+  log "Installing AdGuard Home on $ROUTER_IP"
+
+  local remote_script
+  remote_script=$(cat <<'SCRIPT'
+set -e
+opkg update
+opkg install adguardhome luci-app-adguardhome
+/etc/init.d/adguardhome enable
+/etc/init.d/adguardhome start
+if command -v uci >/dev/null 2>&1; then
+  uci set dhcp.@dnsmasq[0].noresolv='1' >/dev/null 2>&1 || true
+  uci add_list dhcp.@dnsmasq[0].server='127.0.0.1#5353' >/dev/null 2>&1 || true
+  uci commit dhcp >/dev/null 2>&1 || true
+  /etc/init.d/dnsmasq restart >/dev/null 2>&1 || true
+fi
+SCRIPT
+)
+
+  if command -v sshpass >/dev/null 2>&1; then
+    sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 -p "$SSH_PORT" "$SSH_USER@$ROUTER_IP" "$remote_script"
+  else
+    log "sshpass is not installed; switching to interactive SSH mode"
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p "$SSH_PORT" "$SSH_USER@$ROUTER_IP"
+  fi
+
+  log "AdGuard Home installation completed. Open the web UI at http://$ROUTER_IP:3000 after the service starts."
+}
+
+run_openwrt_flash() {
+  [[ "$MODE" =~ ^(auto|web|tftp)$ ]] || die "Unsupported mode: $MODE"
+  [[ -n "$ROUTER_IP" ]] || die "Router IP is empty"
+  [[ -n "$HOST_IP" ]] || die "Host IP is empty"
+
+  require_cmd python3
+  local tmp_dir
+  tmp_dir=$(mktemp -d)
+  trap 'rm -rf "$tmp_dir"' EXIT
+
+  prepare_firmware "$tmp_dir"
+  local firmware_path="$tmp_dir/openwrt-image.bin"
+
+  log "Firmware image prepared at $firmware_path"
+  ask_password
+
+  if [[ "$MODE" == "web" || "$MODE" == "auto" ]]; then
+    if try_web_flash "$tmp_dir/login_page.html" "$tmp_dir/login.json" "$firmware_path"; then
+      exit 0
+    fi
+  fi
+
+  if [[ "$MODE" == "tftp" || "$MODE" == "auto" ]]; then
+    try_tftp_flash "$firmware_path"
+    exit 0
+  fi
+
+  die "The installation flow did not complete successfully"
 }
 
 get_stok() {
@@ -238,33 +320,39 @@ EOF
 main() {
   parse_args "$@"
 
-  [[ "$MODE" =~ ^(auto|web|tftp)$ ]] || die "Unsupported mode: $MODE"
-  [[ -n "$ROUTER_IP" ]] || die "Router IP is empty"
-  [[ -n "$HOST_IP" ]] || die "Host IP is empty"
-
-  require_cmd python3
-  local tmp_dir
-  tmp_dir=$(mktemp -d)
-  trap 'rm -rf "$tmp_dir"' EXIT
-
-  prepare_firmware "$tmp_dir"
-  local firmware_path="$tmp_dir/openwrt-image.bin"
-
-  log "Firmware image prepared at $firmware_path"
-  ask_password
-
-  if [[ "$MODE" == "web" || "$MODE" == "auto" ]]; then
-    if try_web_flash "$tmp_dir/login_page.html" "$tmp_dir/login.json" "$firmware_path"; then
-      exit 0
-    fi
-  fi
-
-  if [[ "$MODE" == "tftp" || "$MODE" == "auto" ]]; then
-    try_tftp_flash "$firmware_path"
-    exit 0
-  fi
-
-  die "The installation flow did not complete successfully"
+  case "$ACTION" in
+    flash)
+      run_openwrt_flash
+      ;;
+    adguard)
+      install_adguard_home
+      ;;
+    menu|"")
+      if [[ $# -eq 0 ]]; then
+        show_menu
+        read -r -p "Choose an option [1-3]: " choice
+        case "$choice" in
+          1)
+            run_openwrt_flash
+            ;;
+          2)
+            install_adguard_home
+            ;;
+          3)
+            exit 0
+            ;;
+          *)
+            die "Invalid selection"
+            ;;
+        esac
+      else
+        run_openwrt_flash
+      fi
+      ;;
+    *)
+      die "Unsupported action: $ACTION"
+      ;;
+  esac
 }
 
 main "$@"

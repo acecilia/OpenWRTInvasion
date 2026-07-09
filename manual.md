@@ -26,6 +26,26 @@ Before using the script, make sure you have:
 ./openwrt-auto.sh --firmware /path/to/openwrt-image.bin --password YOUR_PASSWORD
 ```
 
+### Menu-driven use
+
+```bash
+./openwrt-auto.sh
+```
+
+The menu allows you to:
+
+- flash OpenWrt firmware
+- install AdGuard Home on an existing OpenWrt router
+- exit
+
+### AdGuard Home installation
+
+```bash
+./openwrt-auto.sh --action adguard --ip 192.168.1.1 --password YOUR_PASSWORD
+```
+
+This runs the OpenWrt package installation flow for AdGuard Home and enables the service.
+
 ### Common options
 
 - `--ip <address>`: router IP address (default: `192.168.1.1`)
