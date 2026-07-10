@@ -146,8 +146,13 @@ opkg install adguardhome luci-app-adguardhome
 /etc/init.d/adguardhome enable
 /etc/init.d/adguardhome start
 if command -v uci >/dev/null 2>&1; then
+  uci set dhcp.@dnsmasq[0].port='54' >/dev/null 2>&1 || true
+  uci set dhcp.@dnsmasq[0].domain='lan' >/dev/null 2>&1 || true
+  uci set dhcp.@dnsmasq[0].local='/lan/' >/dev/null 2>&1 || true
+  uci set dhcp.@dnsmasq[0].expandhosts='1' >/dev/null 2>&1 || true
+  uci set dhcp.@dnsmasq[0].cachesize='0' >/dev/null 2>&1 || true
   uci set dhcp.@dnsmasq[0].noresolv='1' >/dev/null 2>&1 || true
-  uci add_list dhcp.@dnsmasq[0].server='127.0.0.1#5353' >/dev/null 2>&1 || true
+  uci -q del dhcp.@dnsmasq[0].server >/dev/null 2>&1 || true
   uci commit dhcp >/dev/null 2>&1 || true
   /etc/init.d/dnsmasq restart >/dev/null 2>&1 || true
 fi
