@@ -6,7 +6,9 @@
 
 **NOTE: THERE ARE REPORTED ISSUES WITH ROUTER IN AP MODE**. If you're not able to succeed in the AP mode, try to switch to some other (WiFi Repeater or Gateway)
 
-**NOTE: THERE ARE COMPATIBILITY ISSUES REPORTED WHEN USING WINDOWS**. This script only runs on Mac or Linux. If you run from Windows, please use docker (explained below)
+**NOTE: THERE ARE COMPATIBILITY ISSUES REPORTED WHEN USING WINDOWS**. This script only runs on Mac or Linux. If you run from Windows, please use docker (explained below) 
+
+(Note: This issue has been resolved. Now, windows is also supported. Thanks to @tahaali1)
 
 ### Using Docker (also works on Windows)
 
